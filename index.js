@@ -11,14 +11,12 @@ function Tunnel(config) {
   var self = this;
 
   self.tunnel_settings = config.tunnel;
-  if (AUTH_TOKEN) {
-    self.tunnel_settings = AUTH_TOKEN;
-  }
 }
 
 Tunnel.prototype.connect = function(port, cb) {
   var self = this;
 
+  if (AUTH_TOKEN) ngrok.authtoken(AUTH_TOKEN);
   ngrok.connect(extend({ port: port }, self.tunnel_settings), function(err, url) {
     if (err) {
       err.stack = '';
